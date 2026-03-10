@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Accountant & Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04030a;--surface:#080614;--card:rgba(255,255,255,0.028);
+  --border:rgba(139,92,246,0.13);--accent:#7c3aed;--accent2:#a855f7;
+  --gold:#c9a84c;--gold2:#e8c878;--text:#e8e4f0;--muted:#7a7290;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:transform .1s;}
+.cur-ring{width:38px;height:38px;border:1.5px solid rgba(168,85,247,.6);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:all .3s cubic-bezier(.23,1,.32,1);}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:998;opacity:.5;}
+
+/* BLOBS */
+.blob{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}
+.b1{width:700px;height:700px;background:radial-gradient(circle,rgba(124,58,237,.12) 0%,transparent 70%);top:-250px;left:-200px;animation:b1 22s ease-in-out infinite;}
+.b2{width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%);bottom:0;right:-100px;animation:b2 18s ease-in-out infinite;}
+.b3{width:400px;height:400px;background:radial-gradient(circle,rgba(168,85,247,.08) 0%,transparent 70%);top:50%;left:50%;animation:b3 30s ease-in-out infinite;}
+@keyframes b1{0%,100%{transform:translate(0,0)}50%{transform:translate(100px,80px)}}
+@keyframes b2{0%,100%{transform:translate(0,0)}50%{transform:translate(-80px,-60px)}}
+@keyframes b3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.3)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.1rem 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(4,3,10,.75);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);animation:slideD .8s both;}
+@keyframes slideD{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;color:#fff;text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
+.nav-links li a{color:var(--muted);text-decoration:none;font-size:.87rem;font-weight:500;letter-spacing:.03em;transition:color .3s;position:relative;padding:.4rem 1rem;display:block;}
+.nav-links li a::after{content:'';position:absolute;bottom:0;left:1rem;width:0;height:1px;background:var(--gold);transition:width .3s;}
+.nav-links li a:hover{color:#fff;}
+.nav-links li a:hover::after{width:calc(100% - 2rem);}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;padding:.5rem 1.3rem!important;border-radius:7px;margin-left:.5rem;}
+.nav-cta::after{display:none!important;}
+.nav-resume-btn{background:linear-gradient(135deg,var(--gold),#a0793a);color:#0a0815!important;font-weight:700!important;padding:.5rem 1.3rem!important;border-radius:7px;margin-left:.4rem;}
+.nav-resume-btn::after{display:none!important;}
+
+/* SECTIONS */
+section{position:relative;z-index:1;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 4rem;}
+.hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:auto;width:100%;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:var(--gold2);font-size:.76rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:.4rem 1rem;border-radius:100px;margin-bottom:1.5rem;animation:fadeUp .9s .2s both;}
+.bdot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;line-height:1.06;letter-spacing:-1px;color:#fff;margin-bottom:.7rem;animation:fadeUp .9s .35s both;}
+.hero-title .gd{color:var(--gold);}
+.hero-title .pu{background:linear-gradient(135deg,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.hero-type{font-size:clamp(.95rem,2vw,1.3rem);color:var(--muted);margin-bottom:1.5rem;animation:fadeUp .9s .45s both;min-height:1.9rem;}
+.typed-text{color:var(--accent2);font-weight:500;}
+.blink{display:inline-block;width:2px;height:1em;background:var(--accent2);margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.hero-desc{color:var(--muted);font-size:.98rem;line-height:1.85;max-width:490px;margin-bottom:2.3rem;animation:fadeUp .9s .55s both;}
+
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .9s .65s both;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#a0793a);color:#0a0815;font-weight:700;font-size:.92rem;padding:.85rem 1.8rem;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .3s;box-shadow:0 0 30px rgba(201,168,76,.3);}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 0 55px rgba(201,168,76,.5);}
+.btn-outline{background:transparent;color:var(--text);font-size:.92rem;font-weight:500;padding:.85rem 1.8rem;border-radius:8px;text-decoration:none;border:1px solid var(--border);display:inline-flex;align-items:center;gap:.5rem;transition:all .3s;}
+.btn-outline:hover{border-color:rgba(168,85,247,.4);background:rgba(124,58,237,.06);transform:translateY(-2px);}
+
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);animation:fadeUp .9s .75s both;flex-wrap:wrap;}
+.stt-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:#fff;letter-spacing:-1px;}
+.stt-num .ac{color:var(--gold);}
+.stt-lab{font-size:.76rem;color:var(--muted);margin-top:.15rem;}
+
+/* RIGHT CARD */
+.hero-right{animation:fadeUp .9s .4s both;display:flex;justify-content:center;}
+.dash-card{width:370px;background:linear-gradient(145deg,rgba(124,58,237,.07),rgba(8,6,20,.92));border:1px solid rgba(124,58,237,.2);border-radius:24px;padding:1.6rem;position:relative;overflow:hidden;}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.dc-head{display:flex;align-items:center;gap:.9rem;margin-bottom:1.3rem;}
+.dc-ava{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:#fff;}
+.dc-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;}
+.dc-role{font-size:.74rem;color:var(--gold2);margin-top:.15rem;}
+
+/* mini dashboard inside card */
+.dc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.2rem;}
+.dc-metric{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.15);border-radius:10px;padding:.85rem;}
+.dc-ml{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;}
+.dc-mv{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;}
+.dc-mv .pos{color:#4ade80;font-size:.7rem;margin-left:.3rem;}
+.dc-mv .neg{color:#f87171;font-size:.7rem;margin-left:.3rem;}
+
+.dc-chart-lbl{font-size:.68rem;color:var(--muted);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.08em;}
+.dc-bars{display:flex;align-items:flex-end;gap:4px;height:55px;}
+.dc-bar{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(180deg,var(--accent2),rgba(124,58,237,.25));animation:barUp 1.5s cubic-bezier(.23,1,.32,1) both;}
+@keyframes barUp{from{height:0}}
+
+.dc-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.1rem;}
+.dc-tag{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:var(--gold2);font-size:.68rem;font-weight:500;padding:.25rem .7rem;border-radius:100px;}
+
+/* COMMON SEC */
+.sec-lbl{font-size:.73rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:.85rem;display:flex;align-items:center;gap:.7rem;}
+.sec-lbl::before{content:'';width:26px;height:1px;background:var(--gold);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.8vw,3rem);font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1.1;margin-bottom:1rem;}
+
+/* ABOUT */
+#about{padding:9rem 5%;}
+.ab-wrap{max-width:1200px;margin:0 auto;}
+.ab-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:center;margin-top:3.5rem;}
+.ab-text p{color:var(--muted);line-height:1.9;font-size:.97rem;margin-bottom:1.1rem;}
+.ab-feats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.6rem;}
+.af{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.95rem 1.1rem;display:flex;align-items:flex-start;gap:.75rem;transition:border-color .3s;}
+.af:hover{border-color:rgba(201,168,76,.3);}
+.af-ico{font-size:1.25rem;flex-shrink:0;}
+.af-t strong{color:var(--text);font-size:.83rem;display:block;margin-bottom:.15rem;}
+.af-t span{color:var(--muted);font-size:.75rem;line-height:1.5;}
+
+.ab-right{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.st-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;transition:all .35s;}
+.st-card:hover{border-color:rgba(124,58,237,.3);transform:translateY(-4px);background:rgba(124,58,237,.04);}
+.st-card.sp2{grid-column:1/-1;}
+.st-big{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:#fff;letter-spacing:-2px;}
+.st-big .g{color:var(--gold);}
+.st-lbl{font-size:.75rem;color:var(--muted);margin-top:.35rem;}
+
+.tools-strip{margin-top:1.6rem;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);border-radius:12px;padding:1.1rem 1.4rem;}
+.tools-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.7rem;}
+.tools-row{display:flex;flex-wrap:wrap;gap:.4rem;}
+.tool-pill{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#c4b5fd;font-size:.72rem;font-weight:500;padding:.28rem .75rem;border-radius:100px;}
+
+/* SKILLS */
+#skills{padding:9rem 5%;background:linear-gradient(180deg,transparent,rgba(124,58,237,.04),transparent);}
+.sk-wrap{max-width:1200px;margin:3.5rem auto 0;}
+.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.sk-cat{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.8rem;transition:all .4s;position:relative;overflow:hidden;}
+.sk-cat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;transform-origin:center;}
+.sk-cat:hover{border-color:rgba(124,58,237,.25);transform:translateY(-5px);}
+.sk-cat:hover::after{transform:scaleX(1);}
+.sk-ico{font-size:2rem;margin-bottom:.7rem;}
+.sk-ttl{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:1.4rem;}
+.sbar{margin-bottom:.9rem;}
+.sbar-top{display:flex;justify-content:space-between;margin-bottom:.35rem;}
+.sbar-name{font-size:.8rem;color:var(--muted);}
+.sbar-pct{font-size:.75rem;color:var(--gold2);font-weight:600;}
+.sbar-track{height:3.5px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+.sbar-fill{height:100%;border-radius:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width 1.6s cubic-bezier(.23,1,.32,1);}
+
+/* PROJECTS */
+#projects{padding:9rem 5%;max-width:1200px;margin:0 auto;}
+.pj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem;}
+.pj-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .4s;}
+.pj-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.pj-thumb{height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:3.2rem;}
+.pj-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(4,3,10,.95));}
+.pj-hover{position:absolute;inset:0;background:rgba(124,58,237,.15);opacity:0;transition:opacity .3s;z-index:1;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.88rem;}
+.pj-card:hover .pj-hover{opacity:1;}
+.pj-body{padding:1.3rem 1.4rem;}
+.pj-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem;}
+.pj-tag{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);padding:.2rem .6rem;border-radius:100px;}
+.pj-ttl{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.45rem;}
+.pj-desc{font-size:.81rem;color:var(--muted);line-height:1.7;margin-bottom:.9rem;}
+.pj-lnk{font-size:.78rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;transition:color .3s;}
+.pj-lnk:hover{color:var(--gold2);}
+
+/* VIDEOS */
+#videos{padding:9rem 5%;background:linear-gradient(180deg,transparent,rgba(201,168,76,.03),transparent);}
+.vd-wrap{max-width:1200px;margin:0 auto;}
+.vd-desc{color:var(--muted);font-size:.97rem;line-height:1.8;max-width:580px;margin-bottom:2.5rem;}
+.vd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.vd-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .4s;}
+.vd-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.vd-thumb{position:relative;height:178px;overflow:hidden;cursor:pointer;}
+.vd-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.vd-ov{position:absolute;inset:0;background:rgba(4,3,10,.55);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.vd-ov.hidden{opacity:0;pointer-events:none;}
+.play-btn{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;box-shadow:0 0 35px rgba(124,58,237,.5);transition:transform .3s;}
+.play-btn:hover{transform:scale(1.1);}
+.play-btn svg{width:20px;height:20px;fill:#fff;margin-left:3px;}
+.vd-info{padding:1.1rem 1.3rem;}
+.vd-tag{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);padding:.2rem .65rem;border-radius:100px;display:inline-block;margin-bottom:.6rem;}
+.vd-ttl{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.35rem;line-height:1.4;}
+.vd-meta{font-size:.75rem;color:var(--muted);display:flex;gap:.8rem;}
+
+/* CONTACT */
+#contact{padding:9rem 5%;}
+.ct-outer{max-width:1200px;margin:0 auto;}
+.ct-inner{max-width:720px;margin:3.5rem auto 0;}
+.ct-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:2rem;}
+.ct-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.2rem;text-align:center;transition:all .3s;}
+.ct-card:hover{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.04);}
+.ct-ico{font-size:1.5rem;margin-bottom:.5rem;}
+.ct-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.25rem;}
+.ct-val{font-size:.83rem;color:var(--text);font-weight:500;}
+
+.ct-form{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:22px;padding:2.2rem;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
+.f-row-1{margin-bottom:.9rem;}
+.fg label{display:block;font-size:.76rem;color:var(--muted);margin-bottom:.45rem;font-weight:500;}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:9px;padding:.8rem 1rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;resize:none;}
+.fg select option{background:#0a0815;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent);background:rgba(124,58,237,.04);}
+.fg textarea{height:120px;}
+.f-submit{width:100%;margin-top:.8rem;background:linear-gradient(135deg,var(--accent),#5b21b6);color:#fff;border:none;padding:.95rem;border-radius:9px;font-size:.95rem;font-weight:700;font-family:'Playfair Display',serif;cursor:pointer;transition:all .3s;letter-spacing:.04em;}
+.f-submit:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,.4);}
+
+.soc-row{display:flex;justify-content:center;gap:.9rem;margin-top:2.2rem;}
+.soc-a{width:48px;height:48px;background:var(--card);border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:1.05rem;transition:all .3s;}
+.soc-a:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.08);color:var(--gold2);transform:translateY(-3px);}
+
+/* RESUME MODAL */
+.resume-modal{position:fixed;inset:0;z-index:800;display:none;align-items:center;justify-content:center;background:rgba(4,3,10,.85);backdrop-filter:blur(12px);}
+.resume-modal.open{display:flex;}
+.resume-box{background:#0c0a1a;border:1px solid rgba(124,58,237,.25);border-radius:24px;width:min(820px,95vw);max-height:90vh;overflow-y:auto;position:relative;padding:2.5rem;animation:fadeUp .4s both;}
+.resume-close{position:absolute;top:1.2rem;right:1.4rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:1.1rem;transition:all .3s;}
+.resume-close:hover{background:rgba(124,58,237,.2);color:#fff;border-color:rgba(124,58,237,.4);}
+
+/* RESUME CONTENT */
+.r-header{display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.r-ava{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#fff;flex-shrink:0;}
+.r-name{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.r-role{font-size:.9rem;color:var(--gold2);font-weight:500;margin:.25rem 0;}
+.r-contact-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem;}
+.r-c-item{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:.3rem;}
+
+.r-sec{margin-bottom:1.8rem;}
+.r-sec-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;}
+.r-sec-title span{font-size:1.1rem;}
+
+.r-obj{color:var(--muted);font-size:.88rem;line-height:1.85;}
+
+.r-exp-item{margin-bottom:1.1rem;}
+.r-exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.3rem;}
+.r-exp-co{font-weight:600;color:#fff;font-size:.9rem;}
+.r-exp-date{font-size:.75rem;color:var(--accent2);background:rgba(168,85,247,.1);padding:.2rem .65rem;border-radius:100px;}
+.r-exp-role{font-size:.82rem;color:var(--gold2);margin-bottom:.4rem;}
+.r-exp-pts{list-style:none;padding:0;}
+.r-exp-pts li{color:var(--muted);font-size:.82rem;line-height:1.7;padding-left:1rem;position:relative;}
+.r-exp-pts li::before{content:'▸';position:absolute;left:0;color:var(--accent2);}
+
+.r-skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.r-skill-row{display:flex;align-items:center;gap:.7rem;}
+.r-skill-name{font-size:.8rem;color:var(--muted);width:140px;flex-shrink:0;}
+.r-sbar{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+.r-sbar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;}
+
+.r-edu-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;}
+.r-edu-deg{font-size:.88rem;font-weight:600;color:#fff;}
+.r-edu-inst{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
+.r-edu-yr{font-size:.75rem;color:var(--accent2);background:rgba(168,85,247,.1);padding:.2rem .65rem;border-radius:100px;}
+
+.r-certs{display:flex;flex-wrap:wrap;gap:.5rem;}
+.r-cert{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:var(--gold2);font-size:.76rem;font-weight:500;padding:.3rem .85rem;border-radius:100px;}
+
+.r-download-btn{width:100%;margin-top:1.5rem;background:linear-gradient(135deg,var(--gold),#a0793a);color:#0a0815;border:none;padding:.9rem;border-radius:10px;font-size:.92rem;font-weight:700;font-family:'Playfair Display',serif;cursor:pointer;transition:all .3s;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.r-download-btn:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(201,168,76,.4);}
+
+/* FOOTER */
+footer{padding:1.8rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:#fff;}
+.f-logo span{color:var(--gold);}
+.f-copy{font-size:.78rem;color:var(--muted);}
+.f-copy span{color:var(--gold);}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;background:rgba(8,6,20,.95);border:1px solid rgba(201,168,76,.3);border-radius:13px;padding:.9rem 1.4rem;color:#fff;font-size:.88rem;backdrop-filter:blur(20px);transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.23,1,.32,1);}
+.toast.show{transform:none;opacity:1;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:all .85s cubic-bezier(.23,1,.32,1);}
+.reveal.visible{opacity:1;transform:none;}
+.rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}
+
+@media(max-width:960px){
+  .hero-wrap,.ab-grid{grid-template-columns:1fr;gap:3rem;}
+  .hero-right{display:none;}
+  .sk-grid,.pj-grid,.vd-grid{grid-template-columns:1fr 1fr;}
+  .ct-cards{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  nav{padding:1rem 4%;}
+  .nav-links{display:none;}
+  #hero,#about,#projects,#videos,#skills,#contact{padding:6rem 4% 4rem;}
+  .sk-grid,.pj-grid,.vd-grid{grid-template-columns:1fr;}
+  .ab-feats,.ab-right{grid-template-columns:1fr;}
+  .f-row{grid-template-columns:1fr;}
+  .r-skills-grid{grid-template-columns:1fr;}
+  .r-header{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Acc<span>.</span>Pro</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+    <li><a href="https://drive.google.com/file/d/1cB0LzuawFJmgQ_Ks9vMudrVtlUtHRnKi/view?usp=drivesdk" target="_blank"class="nav-resume-btn">📄 Resume</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-badge"><div class="bdot"></div>Available for Work</div>
+      <h1 class="hero-title">
+        Accountant &<br>
+        <span class="pu">Data Analyst</span><br>
+        <span class="gd">Expert</span>
+      </h1>
+      <div class="hero-type">
+        I specialize in <span class="typed-text" id="typed"></span><span class="blink"></span>
+      </div>
+      <p class="hero-desc">I turn raw company data into powerful dashboards & insights. With expertise in accounting, GST, income tax, and data analysis — I help businesses make smarter financial decisions.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-gold">📞 Hire Me Now</a>
+        <a href="#projects" class="btn-outline">See My Work →</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stt-num">2<span class="ac">+</span></div><div class="stt-lab">Years Experience</div></div>
+        <div><div class="stt-num">5<span class="ac">+</span></div><div class="stt-lab">GST Ready Accounts</div></div>
+        <div><div class="stt-num">50<span class="ac">+</span></div><div class="stt-lab">Dashboards Built</div></div>
+        <div><div class="stt-num">100<span class="ac">%</span></div><div class="stt-lab">Accuracy in BRS</div></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="dash-card">
+        <div class="dc-head">
+          <div class="dc-ava"><img src="https://lh3.googleusercontent.com/u/0/d/1_9Iv1045FVo78pfme2xCiQPIj__WtNwu"alt="RN" style="width:100%; height:100%; border-radius:14px; object-fit:cover;"></div>
+          <div>
+            <div class="dc-name">Pawan kumar gupta</div>
+            <div class="dc-role">Accountant & Data Analyst</div>
+          </div>
+        </div>
+        <div class="dc-grid">
+          <div class="dc-metric"><div class="dc-ml">Finencial Reporting</div><div class="dc-mv">100% <span class="pos"></span></div></div>
+          <div class="dc-metric"><div class="dc-ml">Cash Flow Management</div><div class="dc-mv">100% <span class="pos">✓</span></div></div>
+          <div class="dc-metric"><div class="dc-ml">Bank Reconciliation</div><div class="dc-mv">100%<span class="pos"></span></div></div>
+          <div class="dc-metric"><div class="dc-ml">Accuracy</div><div class="dc-mv">99.8% <span class="pos">↑</span></div></div>
+        </div>
+        <div class="dc-chart-lbl">Quarterly Data Analysis Output</div>
+        <div class="dc-bars">
+          <div class="dc-bar" style="height:45%;animation-delay:.1s"></div>
+          <div class="dc-bar" style="height:60%;animation-delay:.15s"></div>
+          <div class="dc-bar" style="height:50%;animation-delay:.2s"></div>
+          <div class="dc-bar" style="height:78%;animation-delay:.25s"></div>
+          <div class="dc-bar" style="height:65%;animation-delay:.3s"></div>
+          <div class="dc-bar" style="height:88%;animation-delay:.35s"></div>
+          <div class="dc-bar" style="height:72%;animation-delay:.4s"></div>
+          <div class="dc-bar" style="height:95%;animation-delay:.45s"></div>
+          <div class="dc-bar" style="height:82%;animation-delay:.5s"></div>
+          <div class="dc-bar" style="height:100%;animation-delay:.55s"></div>
+          <div class="dc-bar" style="height:90%;animation-delay:.6s"></div>
+          <div class="dc-bar" style="height:97%;animation-delay:.65s"></div>
+        </div>
+        <div class="dc-tags" style="margin-top:1rem;">
+          <span class="dc-tag">Excel</span>
+          <span class="dc-tag">Tally</span>
+          <span class="dc-tag">Power BI</span>
+          <span class="dc-tag">GST</span>
+          <span class="dc-tag">Python</span>
+          <span class="dc-tag">SQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="ab-wrap">
+    <div class="sec-lbl reveal">About Me</div>
+    <h2 class="sec-title reveal">Numbers Tell Stories —<br>I Make Them Speak</h2>
+    <div class="ab-grid">
+      <div class="about-text reveal">
+        <p>I am a professional Accountant and Data Analyst with 2+ years of experience. My work focuses on maintaining accurate financial records, preparing management reports, and building professional dashboards that help business owners understand their data instantly.</p>
+        <p>I have strong knowledge of GST filing, income tax compliance, and TDS. I use tools like Excel, Tally, Power BI, and Python to analyze company data and present it in a clear, visually powerful way. I believe every number in a business has a story — my job is to tell it clearly.</p>
+        <div class="ab-feats">
+          <div class="af"><div class="af-ico">📊</div><div class="af-t"><strong>Dashboard Building</strong><span>Professional BI dashboards for instant insights</span></div></div>
+          <div class="af"><div class="af-ico">🧾</div><div class="af-t"><strong>GST & Tax Filing</strong><span>Accurate, timely, 100% compliant</span></div></div>
+          <div class="af"><div class="af-ico">📈</div><div class="af-t"><strong>Data Analysis</strong><span>Turn raw data into actionable insights</span></div></div>
+          <div class="af"><div class="af-ico">💼</div><div class="af-t"><strong>Company Accounts</strong><strong></strong><span>Full accounting cycle management</span></div></div>
+        </div>
+        <div class="tools-strip">
+          <div class="tools-lbl">Tools & Software I Use</div>
+          <div class="tools-row">
+            <span class="tool-pill">MS Excel</span>
+            <span class="tool-pill">Tally ERP/Prime</span>
+            <span class="tool-pill">Power BI</span>
+            <span class="tool-pill">Python</span>
+            <span class="tool-pill">SQL</span>
+            <span class="tool-pill">GST Portal</span>
+            <span class="tool-pill">Income Tax Portal</span>
+            <span class="tool-pill">Mandi Books</span>
+          </div>
+        </div>
+      </div>
+      <div class="ab-right reveal">
+        <div class="st-card sp2"><div class="st-big">2<span class="g">+</span></div><div class="st-lbl">Years of Professional Experience</div></div>
+        <div class="st-card"><div class="st-big">50<span class="g">+</span></div><div class="st-lbl">Weekly Financial Reports</div></div>
+        <div class="st-card"><div class="st-big">50<span class="g">+</span></div><div class="st-lbl">Dashboards Created</div></div>
+        <div class="st-card"><div class="st-big">₹5<span class="g">Cr+</span></div><div class="st-lbl">Data Managed</div></div>
+        <div class="st-card"><div class="st-big">100<span class="g">%</span></div><div class="st-lbl">Accuracy in BRS</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="sec-lbl reveal">My Expertise</div>
+    <h2 class="sec-title reveal">Skills &<br>Competencies</h2>
+    <div class="sk-wrap">
+      <div class="sk-grid">
+        <div class="sk-cat reveal">
+          <div class="sk-ico">📊</div>
+          <div class="sk-ttl">Data Analysis & BI</div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">MS Excel (Advanced)</span><span class="sbar-pct">96%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="96"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Power BI Dashboards</span><span class="sbar-pct">88%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="88"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Python (Pandas/Matplotlib)</span><span class="sbar-pct">80%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="80"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">SQL / Data Queries</span><span class="sbar-pct">78%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="78"></div></div></div>
+        </div>
+        <div class="sk-cat reveal rd1">
+          <div class="sk-ico">🧾</div>
+          <div class="sk-ttl">Accounting & Taxation</div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Tally ERP / Prime</span><span class="sbar-pct">97%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="97"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">GST Filing & Compliance</span><span class="sbar-pct">95%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="95"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Income Tax / ITR</span><span class="sbar-pct">90%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="90"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">TDS / TCS Return</span><span class="sbar-pct">88%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="88"></div></div></div>
+        </div>
+        <div class="sk-cat reveal rd2">
+          <div class="sk-ico">📋</div>
+          <div class="sk-ttl">Reporting & Finance</div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">MIS / Management Reports</span><span class="sbar-pct">93%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="93"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Financial Statements</span><span class="sbar-pct">92%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="92"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Payroll Management</span><span class="sbar-pct">90%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="90"></div></div></div>
+          <div class="sbar"><div class="sbar-top"><span class="sbar-name">Budgeting & Forecasting</span><span class="sbar-pct">85%</span></div><div class="sbar-track"><div class="sbar-fill" data-w="85"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-lbl reveal">My Work</div>
+  <h2 class="sec-title reveal">Certificates &<br>Case Studies</h2>
+  <div class="pj-grid">
+    <div class="pj-card reveal">
+      <a href="https://drive.google.com/file/d/1bGFmrcaHzPch9Jw7o06BolGjPL_Oj4O1/view?usp=drivesdk" target="_blank" style="text-decoration: none;">
+        <div class="pj-thumb">
+      <img src="https://drive.google.com/thumbnail?id=1kD6VeShEQFjsmiihznmJEovsjlyDi-qS&sz=w1000" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+      <div class="pj-hover" style="z-index:2;">View Certificate ↗</div>
+    </div>
+  </a>
+        <div class="pj-body">
+       <div class="pj-tags"><span class="pj-tag">Power BI</span><span class="pj-tag">Dashboard</span></div>
+        <div class="pj-ttl">Sales Analytics Dashboard</div>
+        <div class="pj-desc">Built a real-time sales analytics dashboard for a retail company tracking ₹2Cr+ monthly revenue with region-wise and product-wise breakdowns.</div>
+        
+       <a href="https://drive.google.com/file/d/1bGFmrcaHzPch9Jw7o06BolGjPL_Oj4O1/view?usp=drivesdk" class="pj-lnk" target="_blank">📄 View Details</a>
+      </div>
+    </div>
+    <div class="pj-card reveal rd1">
+      <a href="https://drive.google.com/file/d/1kMhIN5aFWenZzBji1L5G3lGfz-wI9dt7/view?usp=drivesdk" target="_blank" style="text-decoration: none;">
+        <div class="pj-thumb">
+          
+          <img src="https://drive.google.com/thumbnail?id=1EvbXqilFTy6qAZV6aDccDZ4UcR85RxVT&sz=w1000" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+          <div class="pj-hover" style="z-index:2;">View Certificate ↗</div>
+        </div>
+      </a>
+        <div class="pj-body">
+        <div class="pj-tags"><span class="pj-tag">Data Analysis</span><span class="pj-tag">Python</span></div>
+        <div class="pj-ttl">Data Analysis Certification</div>
+        <div class="pj-desc">Completed professional training in Data Analysis. Skilled in data cleaning, visualization, and extracting actionable business insights from raw data.</div>
+        
+        <a href="https://drive.google.com/file/d/1kMhIN5aFWenZzBji1L5G3lGfz-wI9dt7/view?usp=drivesdk" class="pj-lnk" target="_blank">📄 View Details</a>
+      </div>
+</div>
+    <div class="pj-card reveal rd2">
+      <div class="pj-thumb" style="background:linear-gradient(135deg,#1a0a00,#2d1500);">📈<div class="pj-hover">View Certificate ↗</div></div>
+      <div class="pj-body">
+        <div class="pj-tags"><span class="pj-tag">Excel</span><span class="pj-tag">MIS</span></div>
+        <div class="pj-ttl">Monthly MIS Report Automation</div>
+        <div class="pj-desc">Automated monthly MIS reporting using Excel macros and Power Query — saved 15+ hours of manual work per month for a 200-employee company.</div>
+        <a href="#" class="pj-lnk">📄 View Details</a>
+      </div>
+    </div>
+    <div class="pj-card reveal">
+      <div class="pj-thumb" style="background:linear-gradient(135deg,#150a2e,#1e0d3e);">💹<div class="pj-hover">View Project ↗</div></div>
+      <div class="pj-body">
+        <div class="pj-tags"><span class="pj-tag">Python</span><span class="pj-tag">Analysis</span></div>
+        <div class="pj-ttl">Profit & Loss Trend Analysis</div>
+        <div class="pj-desc">Used Python and Pandas to analyze 3-year P&L data for a trading company — identified cost leakages saving ₹12L annually.</div>
+        <a href="#" class="pj-lnk">📄 View Details</a>
+      </div>
+    </div>
+    <div class="pj-card reveal rd1">
+      <div class="pj-thumb" style="background:linear-gradient(135deg,#0a0e1a,#0f1628);">💳<div class="pj-hover">View Project ↗</div></div>
+      <div class="pj-body">
+        <div class="pj-tags"><span class="pj-tag">Payroll</span><span class="pj-tag">Tally</span></div>
+        <div class="pj-ttl">Payroll Management Setup</div>
+        <div class="pj-desc">Implemented full payroll system for a 300+ employee company including PF, ESI, TDS calculation, and Form 16 auto-generation.</div>
+        <a href="#" class="pj-lnk">📄 View Details</a>
+      </div>
+    </div>
+    <div class="pj-card reveal rd2">
+      <div class="pj-thumb" style="background:linear-gradient(135deg,#0a1a12,#0c2014);">🏦<div class="pj-hover">View Project ↗</div></div>
+      <div class="pj-body">
+        <div class="pj-tags"><span class="pj-tag">Income Tax</span><span class="pj-tag">ITR</span></div>
+        <div class="pj-ttl">ITR Filing & Tax Planning</div>
+        <div class="pj-desc">Handled income tax filing and planning for 30+ individuals and businesses — maximized deductions and saved ₹25L+ in total tax liability.</div>
+        <a href="#" class="pj-lnk">📄 View Details</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="vd-wrap">
+    <div class="sec-lbl reveal">Content</div>
+    <h2 class="sec-title reveal">Educational Videos &<br>Finance Tips</h2>
+    <p class="vd-desc reveal">I share finance, accounting, and data analysis tutorials to help others learn practically and grow professionally.</p>
+    <div class="vd-grid">
+      <div class="vd-card reveal">
+        <div class="vd-thumb" id="vt1"><div class="vd-bg" style="background:linear-gradient(135deg,#0e0820,#1a0d3b);">📊</div><div class="vd-ov" id="vo1"><div class="play-btn" onclick="playVid('vt1','vo1','VIDEO_ID_1')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">Excel</div><div class="vd-ttl">Excel Dashboard Banana Seekho — Complete Guide</div><div class="vd-meta"><span>👁 15K views</span><span>⏱ 25 min</span></div></div>
+      </div>
+      <div class="vd-card reveal rd1">
+        <div class="vd-thumb" id="vt2"><div class="vd-bg" style="background:linear-gradient(135deg,#0a1a0e,#0d2810);">🧾</div><div class="vd-ov" id="vo2"><div class="play-btn" onclick="playVid('vt2','vo2','VIDEO_ID_2')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">GST</div><div class="vd-ttl">GST Return Filing Step by Step — Hindi Tutorial</div><div class="vd-meta"><span>👁 9K views</span><span>⏱ 20 min</span></div></div>
+      </div>
+      <div class="vd-card reveal rd2">
+        <div class="vd-thumb" id="vt3"><div class="vd-bg" style="background:linear-gradient(135deg,#1a0a00,#2d1500);">📈</div><div class="vd-ov" id="vo3"><div class="play-btn" onclick="playVid('vt3','vo3','VIDEO_ID_3')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">Power BI</div><div class="vd-ttl">Power BI Dashboard Beginner to Advanced</div><div class="vd-meta"><span>👁 22K views</span><span>⏱ 40 min</span></div></div>
+      </div>
+      <div class="vd-card reveal">
+        <div class="vd-thumb" id="vt4"><div class="vd-bg" style="background:linear-gradient(135deg,#150a2e,#1e0d3e);">📋</div><div class="vd-ov" id="vo4"><div class="play-btn" onclick="playVid('vt4','vo4','VIDEO_ID_4')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">Tally</div><div class="vd-ttl">Tally Prime Complete Tutorial 2024</div><div class="vd-meta"><span>👁 18K views</span><span>⏱ 45 min</span></div></div>
+      </div>
+      <div class="vd-card reveal rd1">
+        <div class="vd-thumb" id="vt5"><div class="vd-bg" style="background:linear-gradient(135deg,#0a0e1a,#0f1628);">🐍</div><div class="vd-ov" id="vo5"><div class="play-btn" onclick="playVid('vt5','vo5','VIDEO_ID_5')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">Python</div><div class="vd-ttl">Python for Accountants — Data Analysis Tutorial</div><div class="vd-meta"><span>👁 7K views</span><span>⏱ 30 min</span></div></div>
+      </div>
+      <div class="vd-card reveal rd2">
+        <div class="vd-thumb" id="vt6"><div class="vd-bg" style="background:linear-gradient(135deg,#0a1a12,#0c2014);">💰</div><div class="vd-ov" id="vo6"><div class="play-btn" onclick="playVid('vt6','vo6','VIDEO_ID_6')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div>
+        <div class="vd-info"><div class="vd-tag">Income Tax</div><div class="vd-ttl">Income Tax Kaise Bachayein — Smart Tax Planning</div><div class="vd-meta"><span>👁 11K views</span><span>⏱ 22 min</span></div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.2rem;" class="reveal">
+      <a href="https://youtube.com/@yourchannel" target="_blank" class="btn-gold" style="display:inline-flex;">▶ YouTube Pe Aur Videos Dekho</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="ct-outer">
+    <div class="sec-lbl reveal" style="justify-content:center;">Get In Touch</div>
+    <h2 class="sec-title reveal" style="text-align:center;">Let's Work<br>Together</h2>
+    <div class="ct-inner reveal">
+      <div class="ct-cards">
+        <div class="ct-card"><div class="ct-ico">📞</div><div class="ct-lbl">Phone</div><div class="ct-val">+91 81026 85636</div></div>
+        <div class="ct-card"><div class="ct-ico">📧</div><div class="ct-lbl">Email</div><div class="ct-val">ap.accpro.in@gmail.com</div></div>
+        <div class="ct-card"><div class="ct-ico">📍</div><div class="ct-lbl">Location</div><div class="ct-val">Ranchi , India</div></div>
+      </div>
+      <form class="ct-form" onsubmit="sendForm(event)">
+        <div class="f-row">
+          <div class="fg"><label>Full Name *</label><input type="text" placeholder="Ramesh Kumar" required></div>
+          <div class="fg"><label>Phone Number *</label><input type="tel" placeholder="+91 98765 43210" required></div>
+        </div>
+        <div class="f-row">
+          <div class="fg"><label>Email Address</label><input type="email" placeholder="ramesh@company.com"></div>
+          <div class="fg">
+            <label>Service Required *</label>
+            <select required>
+              <option value="" disabled selected>Kaunsi service chahiye?</option>
+              <option>Excel / Power BI Dashboard</option>
+              <option>GST Registration & Filing</option>
+              <option>Income Tax Return (ITR)</option>
+              <option>Company Data Analysis</option>
+              <option>Tally Setup & Accounting</option>
+              <option>MIS Report Automation</option>
+              <option>Payroll Management</option>
+              <option>TDS / TCS Return</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-row-1">
+          <div class="fg"><label>Message / Requirement</label><textarea placeholder="Apni company ki zaroorat ya query batayein..."></textarea></div>
+        </div>
+        <button type="submit" class="f-submit">📩 Send Message</button>
+      </form>
+      <div class="soc-row">
+        <a href="#" class="soc-a" title="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="#" class="soc-a" title="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a href="#" class="soc-a" title="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a href="mailto:your@email.com" class="soc-a" title="Email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">Acc<span>.</span>Pro</div>
+  <div class="f-copy">© 2025 <span>Your Name</span> · All Rights Reserved</div>
+  <div class="f-copy">Made with <span>♥</span> & Data</div>
+</footer>
+
+<div class="toast" id="toast">✅ Message sent! Main 24 ghante mein reply karunga.</div>
+
+<!-- RESUME MODAL -->
+<div class="resume-modal" id="resumeModal">
+  <div class="resume-box">
+    <div class="resume-close" onclick="closeResume()">✕</div>
+
+    <!-- Header -->
+    <div class="r-header">
+      <div class="r-ava">YN</div>
+      <div>
+        <div class="r-name">Your Full Name</div>
+        <div class="r-role">Accountant & Data Analyst</div>
+        <div class="r-contact-row">
+          <span class="r-c-item">📞 +91 XXXXX XXXXX</span>
+          <span class="r-c-item">📧 your@email.com</span>
+          <span class="r-c-item">📍 Your City, India</span>
+          <span class="r-c-item">💼 LinkedIn: /in/yourname</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objective -->
+    <div class="r-sec">
+      <div class="r-sec-title"><span>🎯</span> Career Objective</div>
+      <p class="r-obj">A dedicated Accountant and Data Analyst with 5+ years of experience in financial accounting, GST & tax compliance, and building professional data dashboards. Passionate about transforming complex financial data into clear, actionable insights for business growth.</p>
+    </div>
+
+    <!-- Experience -->
+    <div class="r-sec">
+      <div class="r-sec-title"><span>💼</span> Work Experience</div>
+
+      <div class="r-exp-item">
+        <div class="r-exp-top">
+          <div><div class="r-exp-co">Company Name Pvt. Ltd.</div><div class="r-exp-role">Senior Accountant & Data Analyst</div></div>
+          <div class="r-exp-date">2022 – Present</div>
+        </div>
+        <ul class="r-exp-pts">
+          <li>Maintained full accounting cycle using Tally Prime for ₹5Cr+ annual turnover</li>
+          <li>Built Power BI & Excel dashboards for monthly MIS reporting — saved 15 hrs/month</li>
+          <li>Handled GST return filing (GSTR-1, 3B, 2A reconciliation) with 100% compliance</li>
+          <li>Filed income tax returns and performed tax planning for company and directors</li>
+        </ul>
+      </div>
+
+      <div class="r-exp-item">
+        <div class="r-exp-top">
+          <div><div class="r-exp-co">Previous Company Name</div><div class="r-exp-role">Junior Accountant</div></div>
+          <div class="r-exp-date">2019 – 2022</div>
+        </div>
+        <ul class="r-exp-pts">
+          <li>Managed day-to-day bookkeeping and bank reconciliation using Tally ERP</li>
+          <li>Prepared monthly P&L, balance sheet, and cash flow statements</li>
+          <li>Assisted in GST filing and TDS return preparation</li>
+          <li>Created advanced Excel reports for inventory and sales tracking</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="r-sec">
+      <div class="r-sec-title"><span>⚡</span> Key Skills</div>
+      <div class="r-skills-grid">
+        <div class="r-skill-row"><span class="r-skill-name">MS Excel (Advanced)</span><div class="r-sbar"><div class="r-sbar-fill" style="width:96%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">Power BI</span><div class="r-sbar"><div class="r-sbar-fill" style="width:88%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">Tally ERP / Prime</span><div class="r-sbar"><div class="r-sbar-fill" style="width:97%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">GST Filing</span><div class="r-sbar"><div class="r-sbar-fill" style="width:95%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">Income Tax / ITR</span><div class="r-sbar"><div class="r-sbar-fill" style="width:90%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">Python / Pandas</span><div class="r-sbar"><div class="r-sbar-fill" style="width:80%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">SQL</span><div class="r-sbar"><div class="r-sbar-fill" style="width:78%"></div></div></div>
+        <div class="r-skill-row"><span class="r-skill-name">MIS Reporting</span><div class="r-sbar"><div class="r-sbar-fill" style="width:93%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="r-sec">
+      <div class="r-sec-title"><span>🎓</span> Education</div>
+      <div class="r-edu-item">
+        <div><div class="r-edu-deg">B.Com (Bachelor of Commerce)</div><div class="r-edu-inst">Your University Name, City</div></div>
+        <div class="r-edu-yr">2019</div>
+      </div>
+      <div class="r-edu-item">
+        <div><div class="r-edu-deg">M.Com / MBA Finance (if applicable)</div><div class="r-edu-inst">Your University Name, City</div></div>
+        <div class="r-edu-yr">2021</div>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="r-sec">
+      <div class="r-sec-title"><span>🏅</span> Certifications</div>
+      <div class="r-certs">
+        <span class="r-cert">GST Practitioner Certificate</span>
+        <span class="r-cert">Advanced Excel (Certified)</span>
+        <span class="r-cert">Power BI (Microsoft)</span>
+        <span class="r-cert">Tally Certified Professional</span>
+        <span class="r-cert">Income Tax Practitioner</span>
+        <span class="r-cert">Python for Data Analysis</span>
+      </div>
+    </div>
+
+    <button class="r-download-btn" onclick="printResume()">⬇ Download / Print Resume (PDF)</button>
+  </div>
+</div>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-5+'px';cur.style.top=my-5+'px';});
+(function a(){rx+=(mx-rx-19)*.12;ry+=(my-ry-19)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.pj-card,.vd-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';ring.style.transform='scale(1.5)';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';ring.style.transform='scale(1)';});
+});
+
+// Typing
+const words=['Excel Dashboards','GST Filing','Data Analysis','MIS Reporting','Income Tax (ITR)','Power BI Reports','Tally Accounting'];
+let wi=0,ci=0,del=false;
+const typed=document.getElementById('typed');
+function type(){
+  const w=words[wi];
+  if(!del){typed.textContent=w.slice(0,++ci);if(ci===w.length){del=true;setTimeout(type,1800);return;}}
+  else{typed.textContent=w.slice(0,--ci);if(ci===0){del=false;wi=(wi+1)%words.length;}}
+  setTimeout(type,del?55:100);
+}
+type();
+
+// Reveal
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Skill bars
+const sb=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.querySelectorAll('.sbar-fill').forEach(b=>b.style.width=b.dataset.w+'%');}),{threshold:.3});
+document.querySelectorAll('.sk-cat').forEach(c=>sb.observe(c));
+
+// Video play — replace VIDEO_ID_1, VIDEO_ID_2... with your actual YouTube video IDs
+function playVid(tId,oId,vid){
+  if(vid.startsWith('VIDEO_ID')){alert('⚠ Apna YouTube Video ID replace karo code mein!\nExample: dQw4w9WgXcQ (URL mein v= ke baad)');return;}
+  const t=document.getElementById(tId),o=document.getElementById(oId);
+  const f=document.createElement('iframe');
+  f.src='https://www.youtube.com/embed/'+vid+'?autoplay=1';
+  f.allow='autoplay;encrypted-media';f.allowFullscreen=true;
+  f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:none;';
+  t.appendChild(f);o.classList.add('hidden');
+}
+
+// Form
+function sendForm(e){e.preventDefault();const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500);e.target.reset();}
+
+// Resume Modal
+function openResume(e){e.preventDefault();document.getElementById('resumeModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeResume(){document.getElementById('resumeModal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('resumeModal').addEventListener('click',function(e){if(e.target===this)closeResume();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeResume();});
+
+// Print Resume
+function printResume(){
+  const box=document.querySelector('.resume-box').innerHTML;
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Resume — Your Name</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Outfit',sans-serif;background:#fff;color:#1a1a1a;padding:2rem;max-width:800px;margin:auto;}
+    .resume-close,.r-download-btn{display:none;}
+    .r-header{display:flex;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:2px solid #7c3aed;}
+    .r-ava{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#c9a84c);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;flex-shrink:0;}
+    .r-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#1a1a1a;}
+    .r-role{font-size:.9rem;color:#7c3aed;font-weight:600;margin:.2rem 0;}
+    .r-contact-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem;}
+    .r-c-item{font-size:.75rem;color:#666;}
+    .r-sec{margin-bottom:1.4rem;}
+    .r-sec-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:1px solid #e0d0ff;}
+    .r-obj{color:#444;font-size:.85rem;line-height:1.8;}
+    .r-exp-item{margin-bottom:1rem;}
+    .r-exp-top{display:flex;justify-content:space-between;}
+    .r-exp-co{font-weight:600;color:#1a1a1a;font-size:.88rem;}
+    .r-exp-date{font-size:.75rem;color:#7c3aed;background:#f0ebff;padding:.15rem .6rem;border-radius:100px;}
+    .r-exp-role{font-size:.8rem;color:#c9a84c;margin-bottom:.3rem;}
+    .r-exp-pts{list-style:none;padding:0;}
+    .r-exp-pts li{color:#555;font-size:.8rem;line-height:1.7;padding-left:.9rem;position:relative;}
+    .r-exp-pts li::before{content:'▸';position:absolute;left:0;color:#7c3aed;}
+    .r-skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+    .r-skill-row{display:flex;align-items:center;gap:.6rem;}
+    .r-skill-name{font-size:.78rem;color:#555;width:130px;flex-shrink:0;}
+    .r-sbar{flex:1;height:4px;background:#f0ebff;border-radius:2px;}
+    .r-sbar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#c9a84c);border-radius:2px;}
+    .r-edu-item{display:flex;justify-content:space-between;margin-bottom:.6rem;}
+    .r-edu-deg{font-size:.85rem;font-weight:600;color:#1a1a1a;}
+    .r-edu-inst{font-size:.76rem;color:#666;}
+    .r-edu-yr{font-size:.74rem;color:#7c3aed;background:#f0ebff;padding:.15rem .55rem;border-radius:100px;}
+    .r-certs{display:flex;flex-wrap:wrap;gap:.4rem;}
+    .r-cert{background:#f0ebff;border:1px solid #d4b8ff;color:#5b21b6;font-size:.74rem;padding:.25rem .75rem;border-radius:100px;}
+  </style></head><body>${box}</body></html>`);
+  w.document.close();
+  setTimeout(()=>w.print(),800);
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const h=a.getAttribute('href');
+  if(h==='#')return;
+  e.preventDefault();
+  const el=document.querySelector(h);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}));
+</script>
+</body>
+</html>
