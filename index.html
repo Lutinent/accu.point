@@ -277,22 +277,74 @@ footer{padding:1.8rem 5%;border-top:1px solid var(--border);display:flex;justify
 .reveal.visible{opacity:1;transform:none;}
 .rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}
 
+/* HAMBURGER ICON HIDDEN ON DESKTOP */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1000;
+}
+
 @media(max-width:960px){
-  .hero-wrap,.ab-grid{grid-template-columns:1fr;gap:3rem;}
-  .hero-right{display:none;}
-  .sk-grid,.pj-grid,.vd-grid{grid-template-columns:1fr 1fr;}
-  .ct-cards{grid-template-columns:1fr;}
+  .hero-wrap, .ab-grid { grid-template-columns: 1fr; gap: 3rem; }
+  
+  /* Hero section ke card ko mobile/tablet par show karein aur center karein */
+  .hero-right { 
+    display: flex; 
+    width: 100%; 
+    justify-content: center; 
+    margin-top: 1rem; 
+  }
+  .dash-card { width: 100%; max-width: 400px; }
+  
+  .sk-grid, .pj-grid, .vd-grid { grid-template-columns: 1fr 1fr; }
+  .ct-cards { grid-template-columns: 1fr; }
+
+  /* Mobile Nav Design */
+  .hamburger { display: block; }
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background: rgba(4, 3, 10, 0.98);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    transition: 0.4s ease-in-out;
+    border-left: 1px solid var(--border);
+    z-index: 999;
+  }
+  .nav-links.active { right: 0; }
+  .nav-links li a { font-size: 1.1rem; }
 }
+
 @media(max-width:600px){
-  nav{padding:1rem 4%;}
-  .nav-links{display:none;}
-  #hero,#about,#projects,#videos,#skills,#contact{padding:6rem 4% 4rem;}
-  .sk-grid,.pj-grid,.vd-grid{grid-template-columns:1fr;}
-  .ab-feats,.ab-right{grid-template-columns:1fr;}
-  .f-row{grid-template-columns:1fr;}
-  .r-skills-grid{grid-template-columns:1fr;}
-  .r-header{flex-direction:column;}
+  nav { padding: 1rem 5%; }
+  #hero, #about, #projects, #videos, #skills, #contact { padding: 6rem 5% 4rem; }
+  
+  /* Text and elements center alignment for mobile */
+  .hero-wrap > div:first-child { text-align: center; }
+  .hero-btns, .hero-stats { justify-content: center; }
+  .sec-lbl { justify-content: center; }
+  .sec-title { text-align: center; }
+  
+  .sk-grid, .pj-grid, .vd-grid { grid-template-columns: 1fr; }
+  .ab-feats, .ab-right { grid-template-columns: 1fr; }
+  .f-row { grid-template-columns: 1fr; }
+  .r-skills-grid { grid-template-columns: 1fr; }
+  .r-header { flex-direction: column; text-align: center; }
+  .r-contact-row { justify-content: center; }
+  
+  /* Mobile touch screens par custom cursor ko disable karein taaki tap karne mein problem na ho */
+  body { cursor: auto; }
+  .cur, .cur-ring { display: none !important; }
 }
+
 </style>
 </head>
 <body>
@@ -306,13 +358,16 @@ footer{padding:1.8rem 5%;border-top:1px solid var(--border);display:flex;justify
 <!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">Acc<span>.</span>Pro</a>
-  <ul class="nav-links">
+  
+  <div class="hamburger" id="hamburger">☰</div>
+  
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Work</a></li>
     <li><a href="#videos">Videos</a></li>
     <li><a href="#contact" class="nav-cta">Hire Me</a></li>
-    <li><a href="https://drive.google.com/file/d/12XoGFY4dHOj7wKV1e7AWJS4voQGSfKS5/view?usp=drivesdk" target="_blank"class="nav-resume-btn">📄 Resume</a></li>
+    <li><a href="https://drive.google.com/file/d/12XoGFY4dHOj7wKV1e7AWJS4voQGSfKS5/view?usp=drivesdk" target="_blank" class="nav-resume-btn">📄 Resume</a></li>
   </ul>
 </nav>
 
@@ -835,6 +890,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',
   const el=document.querySelector(h);
   if(el)el.scrollIntoView({behavior:'smooth'});
 }));
+
+// Mobile Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Jab user kisi menu link par click kare, toh menu apne aap close ho jaye
+document.querySelectorAll('.nav-links li a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+  });
+});
+
 </script>
 </body>
 </html>
